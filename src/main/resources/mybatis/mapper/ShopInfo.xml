@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.testconnect.demo.mapper.ShopMapper">
+    <resultMap id="ShopInfoMap" type="com.testconnect.demo.entity.ShopInfo">
+        <result column="shopId"  property="shopId"></result>
+        <result column="shopUrl"  property="shopUrl"></result>
+        <result column="shopName"  property="shopName"></result>
+        <result column="gid"  property="gid"></result>
+
+        <collection property="shopScore" ofType="com.testconnect.demo.entity.ShopScore">
+            <result column="id"  property="id"/>
+            <result column="shopId"  property="shopId"/>
+            <result column="score"  property="score"/>
+            <result column="isBetter"  property="isBetter"/>
+            <result column="name"  property="name"/>
+        </collection>
+    </resultMap>
+    <select id="getShopInfoBygid" resultMap="ShopInfoMap" parameterType="int">
+        select * from shopinfo si join shopscore ss on ss.shopId = si.shopId where si.gid = #{gid}
+    </select>
+</mapper>

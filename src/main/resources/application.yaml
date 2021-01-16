@@ -1,0 +1,60 @@
+server:
+  port: 8080
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB #\u5355\u6B21\u4E0A\u4F20\u6587\u4EF6\u7684\u5927\u5C0F
+      location: /
+      file-size-threshold: 512KB
+      max-request-size: 50MB #\u603B\u4F53\u4E0A\u4F20\u6587\u4EF6\u7684\u5927\u5C0F
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/supermail?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    #filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+file:
+  accessPath: http://localhost:8080/uploadImg
+  staticAccessPath: /uploadImg/**
+  #文件上传目录 （linux 和 window不同）
+  uploadFolder: D://upload/
+  uploadTopFolder: D://upload/topImg/
+  uploadIntroFolder: D://upload/introImg/
+logging:
+  # 当前磁盘的跟目录下创建创建spring文件夹河log文件夹 log文件夹下有spring.log日志文件
+#  path: /spring/log
+  #不指定路径在当前文件下生成  可以指定完整路径
+  file: F:/springboot.log
+#  pattern:
+#    console:
+#   pattern:
+#     file:
+mybatis:
+  config-location: classpath:mybatis/mapper/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/ShopInfo.xml
+
+
